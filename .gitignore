@@ -1,0 +1,11 @@
+__pycache__
+pretrained_models
+rawAudio
+noiseCancelled
+audioChunks
+spleeteredAudio
+textFiles
+privateKeys
+translatedFiles
+lda_topic_modelling/__pycache__/ 
+lda_topic_modelling/articles-corpus/
