@@ -3,10 +3,10 @@ from nltk.corpus import stopwords
 
 
 def rmRecur(directory_path):
-        if os.path.exists(directory_path):
-            time.sleep(2) 
-            shutil.rmtree(directory_path)
-            print(f"🚮 Deleted directory: {directory_path}")
+    if os.path.exists(directory_path):
+        time.sleep(2) 
+        shutil.rmtree(directory_path)
+        print(f"🚮 Deleted directory: {directory_path}")
 
 # Build Stop Words
 custom_stop_words = {"a", "an", "the", "i", "me", "my", "myself", "mine", "you", "your", 

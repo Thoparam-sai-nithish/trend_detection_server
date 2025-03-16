@@ -19,27 +19,32 @@ app.add_middleware(
 @app.get("/")
 async def read_root():
     return {"message": "Welcome to FastAPI Server"}
-
+    
 @app.post("/upload-videos/")
 async def upload_videos(files: List[UploadFile] = File(...)):
-    saved_files = []
-    VIDEOS_DIR = "videos"
-    os.makedirs(VIDEOS_DIR, exist_ok=True)
-    print("Request Recieved!")
-    for file in files: 
-        video_path = os.path.join(VIDEOS_DIR, file.filename)
+    try : 
+        saved_files = []    
+        VIDEOS_DIR = "videos"
+        os.makedirs(VIDEOS_DIR, exist_ok=True)
+        print("Request Recieved!")
+        for file in files: 
+            video_path = os.path.join(VIDEOS_DIR, file.filename)
 
-        # Save each video to the 'videos' directory
-        with open(video_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+            # Save each video to the 'videos' directory
+            with open(video_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
 
-        saved_files.append(video_path)
- 
-    main()
+            saved_files.append(video_path)
     
+        result = main()   
+        return {"success": True, "message": "Succesfully Processed", "payload" : result}
+    except Exception as e:
+        print("Error while processing the requres!\n", e)
+        return {"success": False, "message": "Error occured while processing your request!", "payload": e}
 
-    return {"message": "Videos uploaded successfully", "saved_files": saved_files}
+       
 
+     
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 

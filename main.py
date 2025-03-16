@@ -6,7 +6,7 @@ import tensorflow as tf
 from speechToText import batchSpeechToText
 from videoToAudio import convertVideoToWav
 from languageTranslator import translate_text_files
-from ldaAnalyser import lda_analyser
+from ldaAnalyser import lda_analyser 
 
 # AVOID CUDA WARNINGS
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -21,6 +21,7 @@ def main():
     raw_audio_dir = 'rawAudio'
     spleetered_audio_dir = 'spleeteredAudio'
     text_dir = "textFiles"
+    translate_text_files_dir =  'translatedFiles'
     convertVideoToWav(video_dir, raw_audio_dir)
     print()
 
@@ -39,15 +40,22 @@ def main():
             os.makedirs(spleetered_audio_dir, exist_ok=True)
 
             batchSpeechToText(spleetered_audio_dir, text_dir, file_name, stt_model)
-
+ 
             rmRecur(spleetered_audio_dir)
 
-        except Exception as e:
+        except Exception as e: 
             print(print(f"❌ Error processing file {file_name}: {e}"))
 
-        print()
-    translate_text_files('textFiles', 'translatedFiles')
-    print(lda_analyser('translatedFiles'))
+        print() 
+    translate_text_files(text_dir, translate_text_files_dir)
+    result = lda_analyser(translate_text_files_dir)
+    rmRecur(video_dir)
+    # rmRecur(translate_text_files_dir)
+    rmRecur(text_dir)
+    rmRecur(raw_audio_dir) 
+
+    print(result)  
+    return result
 
 
 if __name__ == "__main__":

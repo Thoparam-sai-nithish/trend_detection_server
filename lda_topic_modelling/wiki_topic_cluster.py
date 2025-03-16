@@ -33,8 +33,8 @@ def get_theme(doc):
     doc_topics = ldamodel.get_document_topics(doc_bow, minimum_probability=0.05)
 
     # Print the Topcis that the model is trained and identified 
-    # for idx, topic in ldamodel.print_topics(num_topics=50, num_words=10):
-    #     print(f"Topic {idx}: {topic}")
+    for idx, topic in ldamodel.print_topics(num_topics=50, num_words=10):
+        print(f"Topic {idx}: {topic}")
 
     if doc_topics:
         doc_topics.sort(key = itemgetter(1), reverse=True)
