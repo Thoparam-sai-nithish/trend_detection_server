@@ -801,10 +801,11 @@ def set_topic_labels():
     model.save("bertopic_model_custom_labels")
     print("custome labeled model is saved as 'bertopic_model_custom_labels'")
 
-
 def get_theme(text):
     # load the trained model
-    topic_model = BERTopic.load("bertopic_model_custom_labels")
+    current_path = os.path.dirname(__file__)
+    bert_path = os.path.join(current_path, "bertopic_model_custom_labels")
+    topic_model = BERTopic.load(bert_path)
 
     # load the custom labels
     custom_labels  = topic_model.get_topic_info()['CustomName']
@@ -819,11 +820,9 @@ def get_theme(text):
         topic_name = custom_labels[topic_id+1]  # Get custom name if available
         # add to the result list
         top_names.append(topic_name)
-    
     return [top_names, top_probs]
 
 if __name__ == "__main__":
     test_text = "books author publish published"
     print(get_theme(test_text))
-    
     pass

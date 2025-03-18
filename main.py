@@ -7,6 +7,7 @@ from speechToText import batchSpeechToText
 from videoToAudio import convertVideoToWav
 from languageTranslator import translate_text_files
 from ldaAnalyser import lda_analyser 
+from bertAnalyser import bert_analyser
 
 # AVOID CUDA WARNINGS
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -48,13 +49,20 @@ def main():
 
         print() 
     translate_text_files(text_dir, translate_text_files_dir)
-    result = lda_analyser(translate_text_files_dir)
+
+    # pack results
+    lda_result = lda_analyser(translate_text_files_dir)
+    bert_result = bert_analyser(translate_text_files_dir)
+    result = {'lda_result': lda_result, 'bert_result': bert_result}
+
     rmRecur(video_dir)
     # rmRecur(translate_text_files_dir)
     rmRecur(text_dir)
     rmRecur(raw_audio_dir) 
 
-    print(result)  
+
+    print(f"\n{'='*10}PROCESSED{'='*10}\n")  
+    print(result)
     return result
 
 
