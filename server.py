@@ -36,7 +36,7 @@ async def upload_videos(files: List[UploadFile] = File(...)):
 
             saved_files.append(video_path)
     
-        result = main()   
+        result = main()    
         return {"success": True, "message": "Succesfully Processed", "payload" : result}
     except Exception as e:
         print("Error while processing the requres!\n", e)

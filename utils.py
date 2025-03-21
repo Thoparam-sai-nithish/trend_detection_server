@@ -1,6 +1,15 @@
-import os, time, shutil, string
+import os, time, shutil, string, numpy as np
 from nltk.corpus import stopwords
 
+def convert_numpy_types(data):
+    """Recursively convert numpy.float32 to Python float in dictionaries or lists."""
+    if isinstance(data, dict):
+        return {key: convert_numpy_types(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [convert_numpy_types(item) for item in data]
+    elif isinstance(data, np.float32):  # Convert np.float32 to Python float
+        return float(data)
+    return data
 
 def rmRecur(directory_path):
     if os.path.exists(directory_path):

@@ -8,6 +8,7 @@ from videoToAudio import convertVideoToWav
 from languageTranslator import translate_text_files
 from ldaAnalyser import lda_analyser 
 from bertAnalyser import bert_analyser
+from utils import convert_numpy_types
 
 # AVOID CUDA WARNINGS
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -44,7 +45,7 @@ def main():
  
             rmRecur(spleetered_audio_dir)
 
-        except Exception as e: 
+        except Exception as e:  
             print(print(f"❌ Error processing file {file_name}: {e}"))
 
         print() 
@@ -53,7 +54,7 @@ def main():
     # pack results
     lda_result = lda_analyser(translate_text_files_dir)
     bert_result = bert_analyser(translate_text_files_dir)
-    result = {'lda_result': lda_result, 'bert_result': bert_result}
+    result = convert_numpy_types({'lda_result': lda_result, 'bert_result': bert_result})
 
     rmRecur(video_dir)
     # rmRecur(translate_text_files_dir)
