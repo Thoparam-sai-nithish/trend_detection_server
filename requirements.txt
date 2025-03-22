@@ -27,3 +27,6 @@ bertopic==0.16.4
 gensim
 emoji
 contractions
+fastapi
+python-multipart
+uvicorn
